@@ -1,0 +1,61 @@
+#include<iostream>
+#include<cstring>
+using namespace std;
+#define max 100
+string selectedActivity[max];
+int selectedStartingTime[max];
+int selectedFinishingTime[max];
+void sortingAlgoImplement(string activity[],int startTime[],int finishTime[],int length){
+	for(int x = 0;x<length-1;x++){
+		for(int y = 0;y<length-1;y++){
+			if(finishTime[y]>finishTime[y+1]){
+				string hold1 = activity[y];
+				activity[y] = activity[y+1];
+				activity[y+1] = hold1;
+				//----------------
+				int hold2 = startTime[y];
+				startTime[y] = startTime[y+1];
+				startTime[y+1] = hold2;
+				//-----------------
+				int hold3 = finishTime[y];
+				finishTime[y]= finishTime[y+1];
+				finishTime[y+1] = hold3;	
+			}
+		}
+	}
+		cout << " After sorting the arrays with respect to finishing time the new order is :  \n";
+		for(int x = 0;x<length;x++)cout  << activity[x] <<" "<< " " << startTime[x] << "  "<< finishTime[x] << endl; 
+}
+void activitySelectionAlgoImplementation(string activity[],int startTime[],int finishTime[],int length){
+	int index = 0;
+	selectedActivity[index]      = activity[0];
+	selectedStartingTime[index]  = startTime[0];
+	selectedFinishingTime[index] = finishTime[0];
+	index++;
+	int i = 0;
+	for(int j = 1;j<length;j++){
+		if(startTime[j]>=finishTime[i]){
+			selectedActivity[index]      = activity[j];
+			selectedStartingTime[index]  = startTime[j];
+			selectedFinishingTime[index] = finishTime[j];
+			index++;
+			i = j;
+		}
+	}
+	cout << "The final solution for selected activits are : \n";
+	for(int x = 0;x!=index;x++)cout << selectedActivity[x] << " " << 	selectedStartingTime[x] << " " << selectedFinishingTime[x] << endl;
+}
+int main(){
+	int length;
+	cin >> length;
+	string activity[length];
+	int startTime[length];
+	int finishTime[length];
+	for(int x = 0;x<length;x++){
+		cin >> activity[x] >> startTime[x] >> finishTime[x]; 
+	}
+	cout << "MY activities : ";
+	sortingAlgoImplement(activity,startTime,finishTime,length);
+	activitySelectionAlgoImplementation(activity,startTime,finishTime,length);
+	return 0;
+}
